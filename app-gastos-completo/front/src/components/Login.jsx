@@ -15,7 +15,7 @@ export default function Login(){
                 "nome": `${user}`,
                 "senha": `${password}`
             })
-            alert("Login sucesso")
+            alert(`Bem vindo, ${user}!`)
         }catch(error){
             console.log(error)
             alert("Login inválido!")
