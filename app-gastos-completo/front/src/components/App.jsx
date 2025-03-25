@@ -9,14 +9,14 @@ const App = () => {
   return (
     <Router>
       <nav>
-        <Link to="/">Adicionar Gasto</Link>
+        <Link to="/adicionarGasto">Adicionar Gasto</Link>
         <Link to="/lista">Lista de Gastos</Link>
         <Link to="/relatorios">Relatórios</Link>
       </nav>
       <div className="container">
         <Routes>
           <Route path="/" element={<Login/>}/>
-          {/* <Route path="/" element={<AdicionarGasto />} /> */}
+          <Route path="/adicionarGasto" element={<AdicionarGasto />} /> 
           <Route path="/lista" element={<ListaGastos />} />
           <Route path="/relatorios" element={<GraficoGastos />} />
         </Routes>
