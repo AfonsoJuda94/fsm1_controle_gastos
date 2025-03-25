@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import api from "../api";
-
 export default function Login(){
     
     const [user,setUser] = useState('');
@@ -11,11 +10,12 @@ export default function Login(){
     const logar = async (e) =>{
         e.preventDefault()
         try{
-            const response = await api.post(`/login:${user}`,{
+            const response = await api.post(`/login`,{
                 "nome": `${user}`,
-                "senha": `${password}`
+                "senha": `${ password}`
             })
-            alert(`Bem vindo, ${user}!`)
+            console.log(response.data)
+            alert(response.data)
         }catch(error){
             console.log(error)
             alert("Login inválido!")
