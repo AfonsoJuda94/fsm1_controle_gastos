@@ -58,7 +58,7 @@ const AdicionarGasto = () => {
         categoria,
         data,
       });
-      
+
       // Atualiza o contexto com o novo gasto
       adicionarGasto(response.data);
 

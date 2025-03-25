@@ -3,7 +3,6 @@ import AdicionarGasto from "./AdicionarGasto";
 import ListaGastos from "./ListaGastos";
 import GraficoGastos from "./GraficoGastos";
 import "./styles.css"; // 🔥 Importação do CSS
-import Login from "./Login";
 
 const App = () => {
   return (
@@ -15,8 +14,7 @@ const App = () => {
       </nav>
       <div className="container">
         <Routes>
-          <Route path="/" element={<Login/>}/>
-          {/* <Route path="/" element={<AdicionarGasto />} /> */}
+          <Route path="/" element={<AdicionarGasto />} />
           <Route path="/lista" element={<ListaGastos />} />
           <Route path="/relatorios" element={<GraficoGastos />} />
         </Routes>
