@@ -9,6 +9,7 @@ datasource db {
 
 model Gasto {
   id        String   @id @default(uuid())
+  usuario   String
   descricao String
   valor     Float
   categoria String

@@ -70,7 +70,7 @@ app.delete("/gastos/:id", async (req, res) => {
   });
 // Configuração para usuários
 
-// Recuperar todos usuários ->
+// Recuperar todos usuários -> Funciona
 app.get('/usuarios', async (req, res)=>{
   try{
     const usuarios = await prisma.usuario.findMany()
