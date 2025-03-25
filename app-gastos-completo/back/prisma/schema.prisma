@@ -14,3 +14,7 @@ model Gasto {
   categoria String
   data      DateTime @default(now())
 }
+model Usuario {
+  nome String @id
+  senha String
+}

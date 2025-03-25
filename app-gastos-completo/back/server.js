@@ -68,7 +68,59 @@ app.delete("/gastos/:id", async (req, res) => {
       res.status(500).json({ error: "Erro ao excluir gasto" });
     }
   });
-  
+// Configuração para usuários
+
+// Recuperar todos usuários ->
+app.get('/usuarios', async (req, res)=>{
+  try{
+    const usuarios = await prisma.usuario.findMany()
+    res.json(usuarios)
+  }catch(error){
+    res.status(500).json(error)
+  }
+})
+// Listar usuário específico
+app.get('/usuarios/:id', async (req,res)=>{
+  try{
+    const {id} = req.params;
+    const usuario = await prisma.usuario.findUnique({where:{id}})
+    if(!usuario){
+      return res.status(404).json('Usuário não encontrado')
+    }
+    res.json(usuario)
+  }catch(error){
+    res.status(500).json(error)
+  }
+})
+// Registrar usuário -> Funciona
+app.post('/usuarios', async (req,res) => {
+  try{
+    const {nome, senha} = req.body;
+    const novo_usuario = await prisma.usuario.create({
+      data: {nome, senha}
+    })
+    res.json(novo_usuario)
+  }catch(error){
+    res.status(500).json('Erro ao registar usuário')
+  }
+})
+
+//Login --> Funcionando
+app.get('/login:nome', async (req,res) =>{
+  try{
+    const {nome,senha} = req.body;
+    const email = await prisma.usuario.findUnique({where:{nome}})
+    if(!email){
+      return res.status(404).json('Usuário não encontrado')
+    }
+    if(senha !== email.senha){
+      return res.status(500).json("Acesso negado!")
+    }
+    res.json(`Bem vindo, ${nome}!`)
+  }catch{
+    res.status(500).json('Erro no login. Verifique suas credenciais')
+  }
+})
 
 // Inicia o servidor
 app.listen(PORT, () => {
