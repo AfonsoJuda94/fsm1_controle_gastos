@@ -1,7 +1,47 @@
 import api from "./api";
 import jwt_decode from 'jwt-decode';
-
-interface credenciais{
-    nome: String,
-    senha: String
+class AutServerice{
+    async login(credenciais){
+        // eslint-disable-next-line no-useless-catch
+        try{
+            const res = await api.post('/login',credenciais);
+            localStorage.setItem('token',res.data.token)
+            localStorage.setItem('usuario',JSON.stringify(res.data.usuario))
+            return res.data.usuario;
+        }catch(err){
+            throw err;
+        }
+    }
+    //Verificar se usuário está logado
+    isAutheticaded() {
+        const token = localStorage.getItem('token')
+        if(!token) return false;
+    
+        try{
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace('-', '+').replace('_', '/');
+            const payload = JSON.parse(window.atob(base64));  
+            return payload.exp > Date.now() / 1000;
+        }catch{
+            return false;
+        }
+    }
+    
+    logout(){
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+    }
+    setupAxiosInterceptors() {
+        api.interceptors.request.use(config => {
+          const token = localStorage.getItem('token');
+          if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+          }
+          return config;
+        });
+      }
+      getCurrentUser() {
+        return JSON.parse(localStorage.getItem('user'));
+      }
 }
+export default new AutServerice();
