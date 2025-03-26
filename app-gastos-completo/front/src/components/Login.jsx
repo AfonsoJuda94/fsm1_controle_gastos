@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import api from "../api";
 import autenticacao from "../autenticacao";
 export default function Login(){
@@ -11,9 +11,9 @@ export default function Login(){
     const logar = async (e) =>{
         e.preventDefault()
         try{
-            const response = await autenticacao.login({user, password})
+            const response = await autenticacao.login({"nome": user,"senha": password})
             console.log(response.data)
-            alert(response.data)
+            // alert(response.data)
             window.location.href = '/adicionarGasto'
         }catch(error){
             console.log(error)

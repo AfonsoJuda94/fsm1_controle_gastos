@@ -1,5 +1,6 @@
-import api from "./api";
-import jwt_decode from 'jwt-decode';
+// import api from "./api";
+import api from './api';
+import * as jwt_decode from 'jwt-decode';
 class AutServerice{
     async login(credenciais){
         // eslint-disable-next-line no-useless-catch
@@ -7,7 +8,8 @@ class AutServerice{
             const res = await api.post('/login',credenciais);
             localStorage.setItem('token',res.data.token)
             localStorage.setItem('usuario',JSON.stringify(res.data.usuario))
-            return res.data.usuario;
+            console.log(res)
+            return res.data;
         }catch(err){
             throw err;
         }
@@ -18,10 +20,8 @@ class AutServerice{
         if(!token) return false;
     
         try{
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace('-', '+').replace('_', '/');
-            const payload = JSON.parse(window.atob(base64));  
-            return payload.exp > Date.now() / 1000;
+            const decodedToken = jwt_decode(token)
+            return decodedToken.exp > Date.now()/1000;
         }catch{
             return false;
         }
