@@ -43,13 +43,14 @@ app.get("/gastos/:id", async (req, res) => {
 // Rota para adicionar um novo gasto
 app.post("/gastos", async (req, res) => {
   try {
-    const { descricao, valor, categoria, data, usuario } = req.body;
+    const { usuario, descricao, valor, categoria, data } = req.body;
     const novoGasto = await prisma.gasto.create({
-      data: { descricao, valor: parseFloat(valor), categoria,usuario, data: new Date(data) },
+      data: { usuario, descricao, valor: parseFloat(valor), categoria, data: new Date(data) },
     });
-    res.status(201).json(novoGasto);
+    console.log(novoGasto)
+    return res.status(201).json(novoGasto);
   } catch (error) {
-    res.status(500).json({ error: "Erro ao adicionar gasto" });
+    return res.status(500).json({ error: "Erro ao adicionar gasto" });
   }
 });
 
