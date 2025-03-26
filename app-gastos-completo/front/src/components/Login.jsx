@@ -1,6 +1,7 @@
 import { useState } from "react"
 import api from "../api";
 import autenticacao from "../autenticacao";
+import { Link, Router } from "react-router-dom";
 export default function Login(){
     
     const [user,setUser] = useState('');
@@ -23,10 +24,12 @@ export default function Login(){
     return(
     <form onSubmit={logar}>
         <label htmlFor="nome">Usuário:</label>
-        <input type="text" id="nome" onChange={ e => setUser(e.target.value)} required/>
+        <input type="email" id="nome" onChange={ e => setUser(e.target.value)} required/>
         <label htmlFor="senha">Senha:</label>
         <input type="password" name="senha" id="senha" onChange={ e => setPassword(e.target.value)} required />
+        <p>Não está cadastrado? </p>
+        <a href="/cadastro">Cadastre-se</a>
         <button type="submit">Login</button>
     </form>
-)
+)   
 }
