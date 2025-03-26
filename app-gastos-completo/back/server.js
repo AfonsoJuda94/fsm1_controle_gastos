@@ -135,7 +135,7 @@ app.delete('/usuarios', async (req,res) =>{
     return res.status(500).json(err)
   }
 })
-//Login --> Com problemas
+//Login --> Funcionando
 app.post('/login', async (req,res) =>{
   try{
     const {nome, senha} = req.body;
@@ -171,19 +171,32 @@ app.post('/login', async (req,res) =>{
 
 const autenticarToken = (req,res,next) =>{
   const authHeader = req.headers['authorization']
-  const toke = authHeader && authHeader.split(' '[1])
+  const token = authHeader && authHeader.split(' '[1])
   if(token == null){
-    return res.sendStatus(401);
+    return res.sendStatus(401).json({ erro: "Acesso negado! Token não fornecido." });
   } 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.status(403)
-    req.nome = user;
-    next()
-  })
+  try{
+    // jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    //   if (err) return res.status(403)
+    //   req.nome = user;
+    //   next()
+    // })
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.usuario = decoded; // Adiciona os dados do usuário na requisição
+    next();
+  }catch(err){
+    return res.status(403).json({erro: "Token inválido!"})
+  }
+  
 }
+app.get('/perfil', autenticarToken, (req, res) => {
+  res.json({ mensagem: `Usuário logado: ${req.usuario.nome}` });
+});
 
 
 // Inicia o servidor
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
+
+module.exports = autenticarToken;

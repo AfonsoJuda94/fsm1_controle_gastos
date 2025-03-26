@@ -11,7 +11,7 @@ const ListaGastos = () => {
         {gastos.length > 0 ? (
           gastos.map((gasto, index) => (
             <li key={index}>
-              {gasto.descricao} - R$ {gasto.valor.toFixed(2)} ({gasto.categoria}) em {gasto.data}
+              {gasto.descricao} - R$ {gasto.valor.toFixed(2)} ({gasto.categoria}) em {gasto.data} - {gasto.usuario}
             </li>
           ))
         ) : (
