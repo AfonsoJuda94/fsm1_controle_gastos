@@ -204,6 +204,27 @@ app.get('/compartilhado/:id', async (req,res)=>{
   }
 })
 
+// Funcionando
+app.get('/compartilhado/', async (req,res)=>{
+  try{
+    const {email} = req.body;
+    console.log(email)
+    const grupo = await prisma.compartilhado.findMany({
+      where: {
+        emails: {
+          contains: email,  // Verifica se o e-mail está presente no array
+        },
+      },
+    });
+    console.log(grupo)
+    if(grupo.length == 0 ){
+      return res.status(404).json("Grupo inexistente")
+    }
+    return res.json(grupo)
+  }catch(err){
+    return res.status(500).json({"Erro:":err})
+  }
+})
 
 // Middleware de autenticação
 
