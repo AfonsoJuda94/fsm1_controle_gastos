@@ -5,6 +5,8 @@ import GraficoGastos from "./GraficoGastos";
 import "./styles.css"; // 🔥 Importação do CSS
 import Login from "./Login";
 import Cadastro from "./Cadastro";
+import Compartlihado from "./Compartilhado";
+import CriarCompartilhado from "./CriarCompartilhado";
 
 const App = () => {
   return (
@@ -13,6 +15,7 @@ const App = () => {
         <Link to="/adicionarGasto">Adicionar Gasto</Link>
         <Link to="/lista">Lista de Gastos</Link>
         <Link to="/relatorios">Relatórios</Link>
+        <Link to='/compartilhado'>Amigos</Link>
       </nav>
       <div className="container">
         <Routes>
@@ -21,6 +24,8 @@ const App = () => {
           <Route path="/lista" element={<ListaGastos />} />
           <Route path="/relatorios" element={<GraficoGastos />} />
           <Route path="/cadastro" element={<Cadastro/>}/>
+          <Route path="/compartilhado" element ={<Compartlihado/>}/>
+          <Route path="/criarcompartilhado" element = {<CriarCompartilhado/>}/>
         </Routes>
       </div>
     </Router>
