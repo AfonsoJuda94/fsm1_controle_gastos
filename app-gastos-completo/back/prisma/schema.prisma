@@ -19,3 +19,8 @@ model Usuario {
   nome String @id
   senha String
 }
+model Compartilhado{
+  id String @id @default(uuid())
+  nome String
+  emails String[]
+}

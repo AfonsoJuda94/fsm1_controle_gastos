@@ -84,18 +84,18 @@ app.get('/usuarios', async (req, res)=>{
   }
 })
 // Listar usuário específico
-// app.get('/usuarios/:id', async (req,res)=>{
-//   try{
-//     const {id} = req.params;
-//     const usuario = await prisma.usuario.findUnique({where:{id}})
-//     if(!usuario){
-//       return res.status(404).json('Usuário não encontrado')
-//     }
-//     res.json(usuario)
-//   }catch(error){
-//     res.status(500).json(error)
-//   }
-// })
+app.get('/usuarios/:nome', async (req,res)=>{
+  try{
+    const {nome} = req.params;
+    const usuario = await prisma.usuario.findUnique({where:{nome}})
+    if(!usuario){
+      return res.status(404).json('Usuário não encontrado')
+    }
+    return res.json(usuario)
+  }catch(error){
+    return res.status(500).json(error)
+  }
+})
 // Registrar usuário -> Está funcionando
 app.post('/usuarios', async (req,res) => {
   try{
@@ -166,6 +166,44 @@ app.post('/login', async (req,res) =>{
     return res.json({'erro':err})
   }
 })
+
+app.get('/compartilhado', async (req,res) =>{
+  try{
+    const {nome, emails} = req.body;
+    const response = await prisma.compartilhado.findMany({where:{nome}})
+    if(!response){
+      return res.status(404).json("Grupo inexistente")
+    }
+    return res.json(response)
+  }catch(err){
+    return res.status(500).json({"erro":err})
+  }
+})
+
+app.post('/compartilhado', async (req,res)=>{
+  try{
+    const {nome, emails} = req.body;
+    const novo_grupo = await prisma.compartilhado.create({
+      data: {nome, emails}
+    })
+    return res.json('Grupo criado com sucesso')
+  }catch(err){
+    return res.status(500).json({"Erro:":err})
+  }
+})
+app.get('/compartilhado/:id', async (req,res)=>{
+  try{
+    const {id} = req.params;
+    const grupo = await prisma.compartilhado.findUnique({where:{id}})
+    if(!grupo){
+      return res.status(404).json("Grupo inexistente")
+    }
+    return res.json(grupo)
+  }catch(err){
+    return res.status(500).json({"Erro:":err})
+  }
+})
+
 
 // Middleware de autenticação
 
