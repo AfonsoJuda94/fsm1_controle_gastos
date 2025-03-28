@@ -1,7 +1,6 @@
 import { useState } from "react"
-import api from "../api";
+// import api from "../api";
 import autenticacao from "../autenticacao";
-import { Link, Router } from "react-router-dom";
 export default function Login(){
     
     const [user,setUser] = useState('');
